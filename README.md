@@ -1,6 +1,7 @@
 # Objective-C dependency injection in 4 easy steps
 
 In this article we'll show you how to easily apply dependency injection (DI) in your code with [Reliant](https://github.com/appfoundry/Reliant), our open-source DI framework.
+
 In a few easy steps you'll learn how to set up a very simple 'Hello World' DI scenario and along the way we'll explain why DI is actually kinda neat :).
 
 You can find the sample code for this 'Hello World' project [here]().
@@ -65,7 +66,7 @@ Let's open up 'AppDelegate.m' and modify it to look like this:
 What we did here is:
 * **import** the relevant Reliant classes
 * instantiate a **'configurator'**: this loads **your** app's DI configuration, something we'll
-set up in the next step. ***You'll notice that this code doesn't compile which is perfectly normal since we did not yet create 'MyObjectFactory' yet***
+set up in the next step. You'll notice that this code doesn't compile which is perfectly normal since we did not yet create 'MyObjectFactory' yet
 * instantiate a DI **'context'** for your app, using the previously mentioned configurator
 * **start** the context
 
@@ -102,7 +103,7 @@ For now, just make sure to import 'MyObjectFactory.h' in your 'AppDelegate' so t
 
 ## Step 3: Using Reliant
 
-***Note: For simplicity's sake we are writing most of our code in the AppDelegate class. Of course, you would normally use Reliant to inject other classes such as your ViewControllers, Services, etc... We're just trying to make this sample code as simple as possible.***
+***Note:*** For simplicity's sake we are writing most of our code in the AppDelegate class. Of course, you would normally use Reliant to inject other classes such as your ViewControllers, Services, etc... We're just trying to make this sample code as simple as possible.
 
 Let's create a simple Hello World case where we use a 'Greeter' service that is injected by Reliant.
 
