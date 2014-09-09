@@ -1,0 +1,10 @@
+PODS:
+  - Reliant (1.1.0)
+
+DEPENDENCIES:
+  - Reliant
+
+SPEC CHECKSUMS:
+  Reliant: f74dbdb18d90620180a60d4b1c962a36cc354ff1
+
+COCOAPODS: 0.33.1
