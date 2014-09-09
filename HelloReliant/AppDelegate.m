@@ -7,29 +7,20 @@
 //
 
 #import "AppDelegate.h"
-#import <Reliant/OCSApplicationContext.h>
-#import <Reliant/OCSConfiguratorFromClass.h>
-#import "MyObjectFactory.h"
+#import "AppConfiguration.h"
+#import <Reliant/NSObject+OCSReliantContextBinding.h>
+#import <Reliant/NSObject+OCSReliantInjection.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //Initialize a configurator
-    id<OCSConfigurator> configurator = [[OCSConfiguratorFromClass alloc]
-                                        initWithClass:[MyObjectFactory class]];
+    // Initialize Reliant
+    [self ocsBootstrapAndBindObjectContextWithConfiguratorFromClass:[AppConfiguration class]];
     
-    //Initialize the application context with the configurator
-    OCSApplicationContext *context = [[OCSApplicationContext alloc]
-                                      initWithConfigurator:configurator];
+    // Perform Reliant injection on self
+    [self ocsInject];
     
-    //Start the context
-    [context start];
-    
-    [context performInjectionOn:self];
-    
-    //Done!
-
     // Saying hello
     NSLog(@"Greeting: %@", [self.greeter sayHelloTo:@"dude"]);
     

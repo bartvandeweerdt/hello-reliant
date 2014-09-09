@@ -2,9 +2,14 @@ PODS:
   - Reliant (1.1.0)
 
 DEPENDENCIES:
-  - Reliant
+  - Reliant (from `git@github.com:appfoundry/Reliant.git`, branch `parent-context-support`)
+
+EXTERNAL SOURCES:
+  Reliant:
+    :branch: parent-context-support
+    :git: git@github.com:appfoundry/Reliant.git
 
 SPEC CHECKSUMS:
-  Reliant: f74dbdb18d90620180a60d4b1c962a36cc354ff1
+  Reliant: 8483999ce58ecdeaa831383760a8c3d17e518066
 
 COCOAPODS: 0.33.1

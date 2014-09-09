@@ -1,1 +1,1 @@
-../../Reliant/Reliant/OCSConfiguratorBase+ForSubclassEyesOnly.h
+../../Reliant/Reliant/Classes/Configurator/OCSConfiguratorBase+ForSubclassEyesOnly.h

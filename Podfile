@@ -1,1 +1,1 @@
-pod 'Reliant'
+pod 'Reliant', :git => 'git@github.com:appfoundry/Reliant.git', :branch => 'parent-context-support'

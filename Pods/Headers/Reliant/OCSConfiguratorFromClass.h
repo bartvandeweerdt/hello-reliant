@@ -1,1 +1,1 @@
-../../Reliant/Reliant/OCSConfiguratorFromClass.h
+../../Reliant/Reliant/Classes/Configurator/OCSConfiguratorFromClass.h

@@ -4,7 +4,7 @@ In this article we'll show you how to easily apply dependency injection (DI) in 
 
 In a few easy steps you'll learn how to set up a very simple 'Hello World' DI scenario and along the way we'll explain why DI is actually kinda neat :).
 
-You can find the sample code for this 'Hello World' project [here]().
+You can find the sample code for this 'Hello World' project [here](https://github.com/appfoundry/Reliant).
 
 ## Step 1: Importing Reliant
 Let's start by creating a new project and make it an 'empty' application. You know how to do this so let's not go into detail here.
@@ -37,22 +37,13 @@ Let's open up 'AppDelegate.m' and modify it to look like this:
 **AppDelegate.m**
 ```objective-c
 #import "AppDelegate.h"
-#import "OCSApplicationContext.h"
-#import "OCSConfiguratorFromClass.h"
+#import <Reliant/Reliant.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    //Initialize a configurator
-    id<OCSConfigurator> configurator = [[OCSConfiguratorFromClass alloc] initWithClass:[MyObjectFactory class]];
-
-    //Initialize the application context with the configurator
-    OCSApplicationContext *context = [[OCSApplicationContext alloc] initWithConfigurator:configurator];
-
-    //Start the context
-    [context start];
-
-    //Done!
+    // Initialize Reliant
+    [self ocsBootstrapAndBindObjectContextWithConfiguratorFromClass:[AppConfiguration class]];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
@@ -64,23 +55,22 @@ Let's open up 'AppDelegate.m' and modify it to look like this:
 ```
 
 What we did here is:
-* **import** the relevant Reliant classes
-* instantiate a **'configurator'**: this loads **your** app's DI configuration, something we'll
-set up in the next step. You'll notice that this code doesn't compile which is perfectly normal since we did not yet create 'MyObjectFactory' yet
-* instantiate a DI **'context'** for your app, using the previously mentioned configurator
-* **start** the context
+* **Import** Reliant.h
+* **Bootstrap** Reliant: we tell Reliant to create a working context that uses our own custom configuration for dependency injection.
+This configuration is something we'll set up later. You'll notice that this code doesn't compile, which is perfectly normal since we did
+not yet create the 'AppConfiguration' class yet.
 
 Done!
 
 ### It needs to use our configuration data
 
-In the previously shown code block we instantiated a 'configurator' which uses a class called 'MyObjectFactory'. Let's create this class.
+In the previously shown code block we used a 'configuration' class called 'AppConfiguration'. Let's create this class.
 
-**MyObjectFactory.m**
+**AppConfiguration.m**
 ```objective-c
-#import "MyObjectFactory.h"
+#import "AppConfiguration.h"
 
-@implementation MyObjectFactory
+@implementation AppConfiguration
 
 @end
 ```
@@ -88,18 +78,7 @@ In the previously shown code block we instantiated a 'configurator' which uses a
 This is a plain old Objective-C class. Nothing out of the ordinary. You'll notice however that it does not really say or do anything.
 Once we start defining classes that should be injected throughout our project, this is where we'll configure them.
 
-For now, just make sure to import 'MyObjectFactory.h' in your 'AppDelegate' so that your code compiles.
-
-**AppDelegate.m**
-```objective-c
-#import "AppDelegate.h"
-#import <Reliant/OCSApplicationContext.h>
-#import <Reliant/OCSConfiguratorFromClass.h>
-#import "MyObjectFactory.h"
-
-@implementation AppDelegate
-// Rest of AppDelegate.m
-```
+For now, just make sure to import 'AppConfiguration.h' in your 'AppDelegate' so that your code compiles.
 
 ## Step 3: Using Reliant
 
@@ -154,45 +133,34 @@ Now for the important part. Using this service in our AppDelegate means that we 
 **AppDelegate.m**
 ```objective-c
 #import "AppDelegate.h"
-#import <Reliant/OCSApplicationContext.h>
-#import <Reliant/OCSConfiguratorFromClass.h>
-#import "MyObjectFactory.h"
+#import "AppConfiguration.h"
+#import <Reliant/Reliant.h>
 #import "FriendlyGreeter.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //Initialize a configurator
-    id<OCSConfigurator> configurator = [[OCSConfiguratorFromClass alloc] initWithClass:[MyObjectFactory class]];
-
-    //Initialize the application context with the configurator
-    OCSApplicationContext *context = [[OCSApplicationContext alloc] initWithConfigurator:configurator];
-
-    //Start the context
-    [context start];
-
-    //Done!
+    // Initialize Reliant
+    [self ocsBootstrapAndBindObjectContextWithConfiguratorFromClass:[AppConfiguration class]];
 
     // Saying hello
     id<Greeter> greeter = [[FriendlyGreeter alloc] init];
     NSLog(@"Greeting: %@", [greeter sayHelloTo:@"dude"]);
 
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-    return YES;
-}
-
-// Rest of AppDelegate.m
+    // Rest of AppDelegate.m ...
 ```
 
 As you can see, we:
 * imported "FriendlyGreeter.h"
 * instantiated "FriendlyGreeter" and called 'sayHelloTo:'
 
-This works fine... However...
+Running this code outputs:
+```
+Greeting: Hi, dude! How are you?
+```
+
+And this works fine... However...
 
 In a perfect world, we wouldn't need to have this **hard dependency** on
 "FriendlyGreeter" in our code. Instead, we would only need to use the protocol, "Greeter".
@@ -221,36 +189,22 @@ We'll later tell Reliant to find this property and inject the correct implementa
 **AppDelegate.m**
 ```objective-c
 #import "AppDelegate.h"
-#import <Reliant/OCSApplicationContext.h>
-#import <Reliant/OCSConfiguratorFromClass.h>
-#import "MyObjectFactory.h"
+#import "AppConfiguration.h"
+#import <Reliant/Reliant.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //Initialize a configurator
-    id<OCSConfigurator> configurator = [[OCSConfiguratorFromClass alloc] initWithClass:[MyObjectFactory class]];
-
-    //Initialize the application context with the configurator
-    OCSApplicationContext *context = [[OCSApplicationContext alloc] initWithConfigurator:configurator];
-
-    //Start the context
-    [context start];
-
-    //Done!
+    // Initialize Reliant
+    [self ocsBootstrapAndBindObjectContextWithConfiguratorFromClass:[AppConfiguration class]];
 
     // Saying hello
     NSLog(@"Greeting: %@", [self.greeter sayHelloTo:@"dude"]);
 
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-    return YES;
-}
+    // Rest of AppDelegat.m ...
 ```
-We removed the hard dependency on FriendlyGreeter by:
+We **removed the hard dependency** on FriendlyGreeter by:
 * removing the import statement
 * removing the init code
 
@@ -258,25 +212,26 @@ We now remain with only:
 * the greeter @property
 * a call to that property using **only the protocol**
 
+
 We **do not need to instantiate this property**. Reliant does this for us. At least we'll tell it do so with these final pieces of code:
 
-**MyObjectFactory.m**
+**AppConfiguration.m**
 ```objective-c
-#import "MyObjectFactory.h"
+#import "AppConfiguration.h"
 #import "FriendlyGreeter.h"
 
-@implementation MyObjectFactory
+@implementation AppConfiguration
 
-- (id) createSingletonGreeter {
+- (id<Greeter>) createSingletonGreeter {
     return [[FriendlyGreeter alloc] init];
 }
 
 @end
 ```
-We tell Reliant to create a **singleton** for Greeter and inject it in any Reliant enabled class (more on this later) where a @property named 'greeter' exists.
+We tell Reliant to create a **singleton** for Greeter and inject it in any Reliant enabled class (see [self ocsInject]) where a @property named 'greeter' exists.
 As you see, it is only here that we explicitely instantiate an actual Greeter implementation, in this case 'FriendlyGreeter'.
 
-Reliant uses this code (our own object factory) to discern which properties it should inject.
+Reliant uses this code (our configuration class) to discern which properties it should inject and how they should be instantiated.
 It uses the last part of the function name (createSingleton\*THISPART\*) to know the property name
 you are using throughout your code. Of course Reliant offers a lot more power such as aliases, eager loading,
 etc. but you can read up on this in Reliant's excellent [documentation](https://github.com/appfoundry/Reliant/wiki).
@@ -285,60 +240,44 @@ All that is left for us to do now is to tell Reliant to inject our DI-dependenci
 
 Just add one line:
 ```objective-c
-[_context performInjectionOn:self];
+[self ocsInject]
 ```
 Our final AppDelegate implementation now looks like this:
 
 **AppDelegate.m**
 ```objective-c
 #import "AppDelegate.h"
-#import <Reliant/OCSApplicationContext.h>
-#import <Reliant/OCSConfiguratorFromClass.h>
-#import "MyObjectFactory.h"
+#import "AppConfiguration.h"
+#import <Reliant/Reliant.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //Initialize a configurator
-    id<OCSConfigurator> configurator = [[OCSConfiguratorFromClass alloc]
-                                        initWithClass:[MyObjectFactory class]];
+    // Initialize Reliant
+    [self ocsBootstrapAndBindObjectContextWithConfiguratorFromClass:[AppConfiguration class]];
 
-    //Initialize the application context with the configurator
-    OCSApplicationContext *context = [[OCSApplicationContext alloc]
-                                      initWithConfigurator:configurator];
-
-    //Start the context
-    [context start];
-
-    [context performInjectionOn:self];
-
-    //Done!
+    // Perform Reliant injection on self
+    [self ocsInject];
 
     // Saying hello
     NSLog(@"Greeting: %@", [self.greeter sayHelloTo:@"dude"]);
 
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-    return YES;
-}
-// Rest of AppDelegate.m ...
+    // Rest of AppDelegate.m ...
 ```
 
 That's it! You now have a dependency injected implementation of your AppDelegate code.
 
 ##Step 4: Profit!
 
-Let's say we would like to quickly change the Greeter implementation to 'UnfriendlyGreeter'. All we need to do is change our Object Factory as such:
+Let's say we would like to quickly change the Greeter implementation to 'UnfriendlyGreeter'. All we need to do is change our Configuration class as such:
 
-**MyObjectFactory.m**
+**AppConfiguration.m**
 ```objective-c
-#import "MyObjectFactory.h"
+#import "AppConfiguration.h"
 #import "UnfriendlyGreeter.h"
 
-@implementation MyObjectFactory
+@implementation AppConfiguration
 
 - (id) createSingletonGreeter {
     return [[UnfriendlyGreeter alloc] init];
@@ -348,4 +287,6 @@ Let's say we would like to quickly change the Greeter implementation to 'Unfrien
 ```
 And presto! All usages of the greeter @property will now be injected with 'UnfriendlyGreeter' instead.
 
-You can probably see how this can be **very** convenient, for example in a unit testing scenario where you'd like your tested class to call a mock service instead of the real service. Just tell Reliant to inject the mock implementation and you're done!
+You can probably see how Dependency Injection / Inversion of Control can be **very** convenient,
+for example in a unit testing scenario where you'd like your tested class to call a mock service instead of the real service.
+Just tell your test to inject the property with a mock and you’re done.

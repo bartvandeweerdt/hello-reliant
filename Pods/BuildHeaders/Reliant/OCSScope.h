@@ -1,1 +1,1 @@
-../../Reliant/Reliant/OCSScope.h
+../../Reliant/Reliant/Classes/Scope/OCSScope.h

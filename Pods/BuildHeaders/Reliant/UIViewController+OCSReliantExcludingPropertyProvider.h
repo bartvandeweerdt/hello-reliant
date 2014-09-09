@@ -1,1 +1,1 @@
-../../Reliant/Reliant/iOS/UIViewController+OCSReliantExcludingPropertyProvider.h
+../../Reliant/Reliant/Classes/Categories/UIKit/UIViewController+OCSReliantExcludingPropertyProvider.h

@@ -20,7 +20,7 @@
 		CC56C37B19BEF1C800C69BA3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC56C36319BEF1C800C69BA3 /* UIKit.framework */; };
 		CC56C38319BEF1C800C69BA3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC56C38119BEF1C800C69BA3 /* InfoPlist.strings */; };
 		CC56C38519BEF1C800C69BA3 /* HelloReliantTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC56C38419BEF1C800C69BA3 /* HelloReliantTests.m */; };
-		CC56C39119BEFC6B00C69BA3 /* MyObjectFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CC56C39019BEFC6B00C69BA3 /* MyObjectFactory.m */; };
+		CC56C39119BEFC6B00C69BA3 /* AppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = CC56C39019BEFC6B00C69BA3 /* AppConfiguration.m */; };
 		CC56C39519BF021D00C69BA3 /* FriendlyGreeter.m in Sources */ = {isa = PBXBuildFile; fileRef = CC56C39419BF021D00C69BA3 /* FriendlyGreeter.m */; };
 		CC56C39819BF222600C69BA3 /* UnfriendlyGreeter.m in Sources */ = {isa = PBXBuildFile; fileRef = CC56C39719BF222600C69BA3 /* UnfriendlyGreeter.m */; };
 /* End PBXBuildFile section */
@@ -55,8 +55,8 @@
 		CC56C38219BEF1C800C69BA3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CC56C38419BEF1C800C69BA3 /* HelloReliantTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloReliantTests.m; sourceTree = "<group>"; };
 		CC56C38E19BEF27800C69BA3 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
-		CC56C38F19BEFC6B00C69BA3 /* MyObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyObjectFactory.h; sourceTree = "<group>"; };
-		CC56C39019BEFC6B00C69BA3 /* MyObjectFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyObjectFactory.m; sourceTree = "<group>"; };
+		CC56C38F19BEFC6B00C69BA3 /* AppConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConfiguration.h; sourceTree = "<group>"; };
+		CC56C39019BEFC6B00C69BA3 /* AppConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConfiguration.m; sourceTree = "<group>"; };
 		CC56C39219BF009E00C69BA3 /* Greeter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Greeter.h; sourceTree = "<group>"; };
 		CC56C39319BF021D00C69BA3 /* FriendlyGreeter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendlyGreeter.h; sourceTree = "<group>"; };
 		CC56C39419BF021D00C69BA3 /* FriendlyGreeter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendlyGreeter.m; sourceTree = "<group>"; };
@@ -127,8 +127,8 @@
 			children = (
 				CC56C36E19BEF1C800C69BA3 /* AppDelegate.h */,
 				CC56C36F19BEF1C800C69BA3 /* AppDelegate.m */,
-				CC56C38F19BEFC6B00C69BA3 /* MyObjectFactory.h */,
-				CC56C39019BEFC6B00C69BA3 /* MyObjectFactory.m */,
+				CC56C38F19BEFC6B00C69BA3 /* AppConfiguration.h */,
+				CC56C39019BEFC6B00C69BA3 /* AppConfiguration.m */,
 				CC56C39219BF009E00C69BA3 /* Greeter.h */,
 				CC56C39319BF021D00C69BA3 /* FriendlyGreeter.h */,
 				CC56C39419BF021D00C69BA3 /* FriendlyGreeter.m */,
@@ -301,7 +301,7 @@
 			files = (
 				CC56C39819BF222600C69BA3 /* UnfriendlyGreeter.m in Sources */,
 				CC56C37019BEF1C800C69BA3 /* AppDelegate.m in Sources */,
-				CC56C39119BEFC6B00C69BA3 /* MyObjectFactory.m in Sources */,
+				CC56C39119BEFC6B00C69BA3 /* AppConfiguration.m in Sources */,
 				CC56C36C19BEF1C800C69BA3 /* main.m in Sources */,
 				CC56C39519BF021D00C69BA3 /* FriendlyGreeter.m in Sources */,
 			);
